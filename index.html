@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+
+    .image-container {
+      position: relative;
+      width: 800px;
+      margin: 0 auto; /* Added to center the div horizontally */
+    }
+
+    .image {
+      width: 100%;
+      height: auto;
+    }
+
+    .lens {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      background-repeat: no-repeat;
+      background-size: 800px auto;
+      background-position: center center;
+      display: none;
+    }
+
+    .image-container:hover .lens {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img class="image" src="macaw.jpg" alt="Your Image">
+    <div class="lens"></div>
+  </div>
+
+  <script>
+    var lens = document.querySelector('.lens');
+    var imageContainer = document.querySelector('.image-container');
+
+    imageContainer.addEventListener('mousemove', function(e) {
+      var lensSize = 300;
+      var containerRect = imageContainer.getBoundingClientRect();
+      var mouseX = e.clientX - containerRect.left;
+      var mouseY = e.clientY - containerRect.top;
+
+      var lensX = mouseX - lensSize / 6;
+      var lensY = mouseY - lensSize / 6;
+
+      lens.style.left = lensX + 'px';
+      lens.style.top = lensY + 'px';
+
+      lens.style.backgroundImage = 'url(' + imageContainer.querySelector('.image').src + ')';
+      lens.style.backgroundPosition = -lensX * 3 + 'px ' + -lensY * 3 + 'px';
+    });
+  </script>
+</body>
+</html>
